@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33516.290
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api1", "Api1\Api1.csproj", "{B7D38863-25F1-4B89-BC70-BB4882406257}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{4CA11945-8057-4A3A-902E-78B1A425A953}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FD70D829-541D-438B-A618-A1251C90E8ED}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "img", "img", "{A525E6E0-4D3E-41BE-AF53-27538A21CE2A}"
+	ProjectSection(SolutionItems) = preProject
+		img\005.jpg = img\005.jpg
+		img\006.jpg = img\006.jpg
+		img\007.jpg = img\007.jpg
+		img\008.jpg = img\008.jpg
+		img\009.jpg = img\009.jpg
+		img\010.jpg = img\010.jpg
+		img\012.jpg = img\012.jpg
+		img\013.jpg = img\013.jpg
+		img\014.jpg = img\014.jpg
+		img\015.jpg = img\015.jpg
+		img\016.jpg = img\016.jpg
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api2", "Api2\Api2.csproj", "{2F7F0910-1BC3-407E-8F60-7593C3CF1CBD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B7D38863-25F1-4B89-BC70-BB4882406257}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7D38863-25F1-4B89-BC70-BB4882406257}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7D38863-25F1-4B89-BC70-BB4882406257}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7D38863-25F1-4B89-BC70-BB4882406257}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CA11945-8057-4A3A-902E-78B1A425A953}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CA11945-8057-4A3A-902E-78B1A425A953}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CA11945-8057-4A3A-902E-78B1A425A953}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CA11945-8057-4A3A-902E-78B1A425A953}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F7F0910-1BC3-407E-8F60-7593C3CF1CBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F7F0910-1BC3-407E-8F60-7593C3CF1CBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F7F0910-1BC3-407E-8F60-7593C3CF1CBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F7F0910-1BC3-407E-8F60-7593C3CF1CBD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A525E6E0-4D3E-41BE-AF53-27538A21CE2A} = {FD70D829-541D-438B-A618-A1251C90E8ED}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {37B76CE0-AA4E-40A5-BAB9-FCB2B5081AE1}
+	EndGlobalSection
+EndGlobal
