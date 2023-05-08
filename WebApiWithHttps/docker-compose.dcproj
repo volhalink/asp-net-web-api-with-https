@@ -6,7 +6,8 @@
     <ProjectGuid>4ca11945-8057-4a3a-902e-78b1a425a953</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
-    <DockerServiceName>api1</DockerServiceName>
+    <DockerServiceName>https-apis</DockerServiceName>
+	<DockerComposeProjectName>https-apis</DockerComposeProjectName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">

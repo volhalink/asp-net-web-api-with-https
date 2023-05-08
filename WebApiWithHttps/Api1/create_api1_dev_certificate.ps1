@@ -1,0 +1,1 @@
+﻿. ..\create_dev_certificate.ps1 -projectname "Api1" -domain "api1" -pwdvalue  "Api1 certificate password" 

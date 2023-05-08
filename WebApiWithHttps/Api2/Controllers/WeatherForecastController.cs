@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Numerics;
 
 namespace Api2.Controllers
 {
@@ -28,6 +29,14 @@ namespace Api2.Controllers
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+
+        [HttpGet]
+        [Route("api2/valuesfromapi1")]
+        public async Task<IEnumerable<int>> GetApi1Values()
+        {
+            var client = new HttpClient();
+            return await client.GetFromJsonAsync<IEnumerable<int>>("https://api1:7235/WeatherForecast/api1/values");
         }
     }
 }

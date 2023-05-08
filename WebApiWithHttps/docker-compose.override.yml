@@ -4,20 +4,20 @@ services:
   api1:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=https://+:7235;
+      - Kestrel__Certificates__Default__Path=/root/.aspnet/https/Api1.pfx
     ports:
-      - "80"
-      - "443"
+      - "7235:7235"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
   api2:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=https://+:7186;
+      - Kestrel__Certificates__Default__Path=/root/.aspnet/https/Api2.pfx
     ports:
-      - "80"
-      - "443"
+      - "7186:7186"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

@@ -6,10 +6,17 @@ services:
     build:
       context: .
       dockerfile: Api1/Dockerfile
+    networks:
+      - api
 
   api2:
     image: ${DOCKER_REGISTRY-}api2
     build:
       context: .
       dockerfile: Api2/Dockerfile
+    networks:
+      - api
+networks:
+  api:
+    driver: bridge
 

@@ -29,5 +29,12 @@ namespace Api1.Controllers
             })
             .ToArray();
         }
+
+        [HttpGet]
+        [Route("api1/values")]
+        public IEnumerable<int> GetValues()
+        {
+            return new List<int>() { 1, 2, 3 };
+        }
     }
 }

@@ -9,6 +9,9 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FD70D829-541D-438B-A618-A1251C90E8ED}"
 	ProjectSection(SolutionItems) = preProject
+		Api1\create_api1_dev_certificate.ps1 = Api1\create_api1_dev_certificate.ps1
+		Api2\create_api2_dev_certificate.ps1 = Api2\create_api2_dev_certificate.ps1
+		create_dev_certificate.ps1 = create_dev_certificate.ps1
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -25,6 +28,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "img", "img", "{A525E6E0-4D3
 		img\014.jpg = img\014.jpg
 		img\015.jpg = img\015.jpg
 		img\016.jpg = img\016.jpg
+		img\017.jpg = img\017.jpg
+		img\018.jpg = img\018.jpg
+		img\019.jpg = img\019.jpg
+		img\020.jpg = img\020.jpg
+		img\021.jpg = img\021.jpg
+		img\022.jpg = img\022.jpg
+		img\023.jpg = img\023.jpg
+		img\024.jpg = img\024.jpg
+		img\025.jpg = img\025.jpg
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api2", "Api2\Api2.csproj", "{2F7F0910-1BC3-407E-8F60-7593C3CF1CBD}"
