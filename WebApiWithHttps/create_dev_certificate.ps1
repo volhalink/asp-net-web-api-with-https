@@ -35,5 +35,5 @@ Export-PfxCertificate -Cert $certpath -FilePath $pfxnewpath -Password $pwd
 
 dotnet user-secrets init
 dotnet user-secrets set "Kestrel:Certificates:Default:Password" $pwdvalue
-# use the .pfx certificate from shared folder on local run
+# use the .pfx certificate from the shared folder on the local run
 dotnet user-secrets set "Kestrel:Certificates:Default:Path" $pfxnewpath
