@@ -326,3 +326,26 @@ We also need to update `C:\Windows\System32\drivers\etc\hosts` file with this ne
 127.0.0.1 project1_frontend
 ```
 
+#### Use new certificates
+
+First we need to remove `aspnetcore-https.js` in `Project1\ClientApp` folder. This file exports default dev certificate which we won't use. And update `package.json` to run only `aspnetcore-react.js` in `prestart`.
+
+We also need to update the `aspnetcore-react.js` file to use the correct certificates:
+
+```
+const certFilePath = path.join(baseFolder, `dev_${certificateName}.pem`);
+const keyFilePath = path.join(baseFolder, `dev_${certificateName}.key`);
+
+fs.writeFileSync(
+    '.env.development.local',
+    `SSL_CRT_FILE=${certFilePath}
+SSL_KEY_FILE=${keyFilePath}`
+);
+```
+
+And as we plan to use docker, let's remove SPA proxy call from `Project1.csproj` by removing the next lines:
+
+```
+    <SpaProxyServerUrl>https://localhost:44423</SpaProxyServerUrl>
+    <SpaProxyLaunchCommand>npm start</SpaProxyLaunchCommand>
+```
