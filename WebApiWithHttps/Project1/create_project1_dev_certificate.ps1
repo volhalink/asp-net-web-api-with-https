@@ -1,0 +1,1 @@
+﻿. ..\create_dev_certificate.ps1 -projectname "Project1" -domain "project1", "project1_bff", "project1_frontend" -pwdvalue  "Project1 certificate password" -shouldsavekey $true
