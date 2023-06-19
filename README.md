@@ -1,9 +1,10 @@
-# ASP.NET Web API with HTTPS using self-signed certificates and docker-compose
+# ASP.NET Core with HTTPS using self-signed certificates and docker-compose
 
 * Host: Windows 10
 * Containers: Debian 11 (the default for Docker image at the moment of writing, check [sdk image](https://hub.docker.com/_/microsoft-dotnet-sdk/) and [asp.net image](https://hub.docker.com/_/microsoft-dotnet-aspnet/))
 
-## Creating a project
+## ASP.NET Core Web API
+### Creating a project
 
 Let's create an ASP.NET Core Web API project:
 
@@ -53,7 +54,7 @@ Let's add another Web API project to the solution, so we can later test API call
 1. Create Api2 project, the same as Api1. 
 2. And add container orchestration support the same way as for the first project (it will update docker-compose.yml and docker-compose.override.yml files).
 
-## Custom domain
+### Custom domain
 
 The default development certificate is generated for the localhost only. So, when we want to call the API in the container with its container name, or even better - from another container, we will need to create our own self-signed certificate and do a bit of configuration.
 
@@ -106,7 +107,7 @@ To fix this, we will:
 2. Make them trusted on the host machine and in the containers.
 3. Map the containers' ports to the host ports so we have the same URLs when calling from the host or another container.
 
-### Generating a self-signed certificate for the project
+#### Generating a self-signed certificate for the project
 
 See the `create_dev_certificate.ps1` base script. We will need to call `create_api1_dev_certificate.ps1` and `create_api2_dev_certificate.ps1` from their projects' folders correspondingly (it's important because we set user secrets for the projects) and with admin rights, as we set trusted certificates in this scripts.
 
@@ -197,7 +198,7 @@ This path from user secrets is correct for the local run. But we need to overrid
 Note: colon (:) separator [isn't supported](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-7.0#non-prefixed-environment-variables) by environment variables on Debian 11, we need to replace it with the double underscore (__) which is then converted to the colon (:) by ASP.NET Core.
 
 
-#### Use custom domains on the host machine
+##### Use custom domains on the host machine
 
 Edit `C:\Windows\System32\drivers\etc\hosts` to add custom domains at the end of the file:
 
@@ -220,7 +221,7 @@ Now if we run api2 locally and api1 in the container - we can get values from ap
 
 So, last but not least:
 
-#### Trust the self-signed certificate in the container
+##### Trust the self-signed certificate in the container
 
 On Debian 11 we can trust the self-signed certificate in a few steps:
 
@@ -247,3 +248,12 @@ As these certificates are needed only during the development, we won't change th
 So for now we can run the script manually each time we recreate the container.
 
 As soon as we run this script on api2's container - the api1's certificate becomes trusted and we can successfully call the api1 from api2.
+
+## ASP.NET Core with React.js
+
+### Creating a project
+
+Let's create an ASP.NET Core with React.js project:
+
+![default project's configuration on creation](/img/026.jpg)
+
