@@ -328,7 +328,11 @@ We also need to update `C:\Windows\System32\drivers\etc\hosts` file with this ne
 
 #### Use new certificates
 
-First we need to remove `aspnetcore-https.js` in `Project1\ClientApp` folder. This file exports default dev certificate which we won't use. And update `package.json` to run only `aspnetcore-react.js` in `prestart`.
+First we need to remove `aspnetcore-https.js` in `Project1\ClientApp` folder. This file exports default dev certificate which we won't use. And update `package.json` to run only `aspnetcore-react.js` in `prestart`:
+
+```
+"prestart": "node aspnetcore-react",
+```
 
 We also need to update the `aspnetcore-react.js` file to use the correct certificates:
 
@@ -349,3 +353,172 @@ And as we plan to use docker, let's remove SPA proxy call from `Project1.csproj`
     <SpaProxyServerUrl>https://localhost:44423</SpaProxyServerUrl>
     <SpaProxyLaunchCommand>npm start</SpaProxyLaunchCommand>
 ```
+
+#### Docker
+
+First add Docker support for the Project1.
+
+Remove `ASPNETCORE_HOSTINGSTARTUPASSEMBLIES` from `launchSettings.json` and copy the https port. We won't use HTTP, so the http link can be removed as well.
+
+Now in a new Dockerfile `EXPOSE` only the port from `launchSettings.json`. For example:
+
+```
+"applicationUrl": "https://localhost:7151"
+```
+
+```
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
+WORKDIR /app
+EXPOSE 7151
+```
+
+Create additional `Dockerfile` in `ClientApp` folder:
+
+```
+FROM node:20.1-alpine3.17
+WORKDIR /app
+EXPOSE 7152
+
+# Start the app
+CMD [ "npm", "run", "start" ]
+```
+
+Use some different port, eg. the application's port + 1.
+
+Update `.env.development` file with this new port:
+
+```
+PORT=7152
+HTTPS=true
+```
+
+Now let's update the Docker Compose configuration.
+
+In `docker-compose.yml` we add 3 new containers:
+
+```
+project1_bff:
+    container_name: project1_bff
+    image: ${DOCKER_REGISTRY-}project1bff
+    build:
+      context: .
+      dockerfile: Project1/Dockerfile
+    ports:
+      - "7151:7151"  
+    networks:
+      - project1_bff
+
+  project1_frontend:
+    container_name: project1_frontend
+    image: ${DOCKER_REGISTRY-}project1frontend
+    build:
+      context: .
+      dockerfile: Project1/ClientApp/Dockerfile
+    ports:
+      - "7152:7152"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - project1_bff
+
+  nginx:
+    container_name: project1
+    image: nginx:1.24.0
+    volumes:
+     - ./nginx/templates:/etc/nginx/templates
+    ports:
+     - "7153:7153"
+    environment:
+     - NGINX_HOST=project1
+     - NGINX_PORT=7153
+    networks:
+      - project1_bff
+    command: [nginx-debug, '-g', 'daemon off;']
+```
+
+and a new network `project1_bff`:
+
+```
+networks:
+  api:
+    driver: bridge
+  project1_bff:
+    driver: bridge
+```
+
+Use some new port for Nginx container, eg. frontend app's port + 1.
+
+We also need to create template file for Nginx's configuration. Let's create `nginx` folder in the solution's folder and `templates` folder in it. Then add `default.conf.template` file in `templates` folder. Add this file to the solution.
+
+Configure `Nginx` with this template:
+
+```
+upstream backend {
+    server project1_bff:7151;
+}
+
+upstream frontend {
+    server project1_frontend:7152;
+}
+
+server {
+  listen ${NGINX_PORT} ssl;
+  listen [::]:${NGINX_PORT} ssl http2;
+  server_name ${NGINX_HOST};
+
+  ssl_certificate /root/.aspnet/https/dev_Project1.pem;
+  ssl_certificate_key /root/.aspnet/https/dev_Project1.key;
+
+  location / {
+    proxy_pass https://frontend/;
+  }
+
+  location ~ /weatherforecast {
+    proxy_pass https://backend$request_uri;
+    proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header   X-Forwarded-Proto $scheme;
+    proxy_set_header   Host project1:7153;
+    proxy_set_header Cookie $http_cookie;
+  }
+
+  error_page 500 502 503 504 /50x.html;
+  location = /50x.html {
+    root /usr/share/nginx/html;
+  }
+}
+```
+
+Update `docker-compose.override.yml` file to add new projects:
+
+```
+  project1_bff:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:7151
+      - Kestrel__Certificates__Default__Path=/root/.aspnet/https/dev_Project1.pfx
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+  project1_frontend:
+    environment:
+      - NODE_ENV=Development
+    volumes:
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - ./Project1/ClientApp:/app
+  nginx:
+    volumes:
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+```
+
+Don't forget to update Api1 and Api2 certificates' file names in `docker-compose.override.yml` to use `dev_` prefix and regenerate the sertificates with a new script we created in this part.
+
+```
+- Kestrel__Certificates__Default__Path=/root/.aspnet/https/dev_Api1.pfx
+```
+
+```
+- Kestrel__Certificates__Default__Path=/root/.aspnet/https/dev_Api2.pfx
+```
+
+
+Now debug the solution with the Docker Compose. After the containers have been created and applications have started, go to the `https://project1:7153/` and test it.

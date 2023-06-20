@@ -5,7 +5,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:7235;
-      - Kestrel__Certificates__Default__Path=/root/.aspnet/https/Api1.pfx
+      - Kestrel__Certificates__Default__Path=/root/.aspnet/https/dev_Api1.pfx
     ports:
       - "7235:7235"
     volumes:
@@ -15,9 +15,26 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:7186;
-      - Kestrel__Certificates__Default__Path=/root/.aspnet/https/Api2.pfx
+      - Kestrel__Certificates__Default__Path=/root/.aspnet/https/dev_Api2.pfx
     ports:
       - "7186:7186"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+  project1_bff:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:7151
+      - Kestrel__Certificates__Default__Path=/root/.aspnet/https/dev_Project1.pfx
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+  project1_frontend:
+    environment:
+      - NODE_ENV=Development
+    volumes:
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - ./Project1/ClientApp:/app
+  nginx:
+    volumes:
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

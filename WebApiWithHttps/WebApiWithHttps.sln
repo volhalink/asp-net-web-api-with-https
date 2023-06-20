@@ -13,12 +13,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Api2\create_api2_dev_certificate.ps1 = Api2\create_api2_dev_certificate.ps1
 		create_dev_certificate.ps1 = create_dev_certificate.ps1
 		Project1\create_project1_dev_certificate.ps1 = Project1\create_project1_dev_certificate.ps1
+		nginx\templates\default.conf.template = nginx\templates\default.conf.template
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api2", "Api2\Api2.csproj", "{2F7F0910-1BC3-407E-8F60-7593C3CF1CBD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project1", "Project1\Project1.csproj", "{F05C2BBE-3133-4524-989E-5CDBFC12A3D6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nginx", "nginx", "{D2B5876E-5007-426C-9BBA-C09235D69994}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{DAB3411C-734E-4464-A12C-BE25F3FDA571}"
+	ProjectSection(SolutionItems) = preProject
+		nginx\templates\default.conf.template = nginx\templates\default.conf.template
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +53,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D2B5876E-5007-426C-9BBA-C09235D69994} = {FD70D829-541D-438B-A618-A1251C90E8ED}
+		{DAB3411C-734E-4464-A12C-BE25F3FDA571} = {D2B5876E-5007-426C-9BBA-C09235D69994}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {37B76CE0-AA4E-40A5-BAB9-FCB2B5081AE1}

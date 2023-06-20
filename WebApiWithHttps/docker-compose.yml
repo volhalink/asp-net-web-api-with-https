@@ -16,7 +16,49 @@ services:
       dockerfile: Api2/Dockerfile
     networks:
       - api
+
+  project1_bff:
+    container_name: project1_bff
+    image: ${DOCKER_REGISTRY-}project1bff
+    build:
+      context: .
+      dockerfile: Project1/Dockerfile
+    ports:
+      - "7151:7151"  
+    networks:
+      - project1_bff
+
+  project1_frontend:
+    container_name: project1_frontend
+    image: ${DOCKER_REGISTRY-}project1frontend
+    build:
+      context: .
+      dockerfile: Project1/ClientApp/Dockerfile
+    ports:
+      - "7152:7152"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - project1_bff
+
+  nginx:
+    container_name: project1
+    image: nginx:1.24.0
+    volumes:
+     - ./nginx/templates:/etc/nginx/templates
+    ports:
+     - "7153:7153"
+    environment:
+     - NGINX_HOST=project1
+     - NGINX_PORT=7153
+    networks:
+      - project1_bff
+    command: [nginx-debug, '-g', 'daemon off;']
+
+
 networks:
   api:
+    driver: bridge
+  project1_bff:
     driver: bridge
 
